@@ -1,9 +1,9 @@
 Level = struct
-  map:    "table"
-
-  width:  "number"
-  height: "number"
-  size:   "number"
+  map:      "table"
+  width:    "number"
+  height:   "number"
+  size:     "number"
+  registry: "table"
 
 Level\impl
   init: =>
@@ -21,7 +21,7 @@ Level\impl
 
   set: (x, y, val) =>
     assert x < @width and y < @height and x >= 0 and y >= 0
-    @map[x][y] = val  
+    @map[x][y] = val
 
   get: (x, y) =>
     assert x < @width and y < @height and x >= 0 and y >= 0

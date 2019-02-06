@@ -28,11 +28,6 @@ function struct (members)
          end
          return setmetatable(init, {
             __index = self.impls,
-            __newindex = function(self, key, value)
-               assert(members[key], "setting nonexistent member "..key)
-               assert(type(value) == members[key], "type mismatch for member "..key..' expected:'..members[key]..' got:'..type(value))
-               self[key] = value
-            end
          })
       end;
 

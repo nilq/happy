@@ -6,6 +6,8 @@ export state = stager
 
 state\switch "game"
 
+math.lerp = (a, b, t) -> a + (b - a) * t
+
 love.load   =      -> state\init!
 love.update = (dt) -> state\update dt
 love.draw   =      -> state\draw!

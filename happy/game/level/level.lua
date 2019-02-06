@@ -2,7 +2,8 @@ local Level = struct({
   map = "table",
   width = "number",
   height = "number",
-  size = "number"
+  size = "number",
+  registry = "table"
 })
 Level:impl({
   init = function(self)

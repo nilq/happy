@@ -3,6 +3,9 @@ local stager
 stager = require("libs/").stager
 state = stager
 state:switch("game")
+math.lerp = function(a, b, t)
+  return a + (b - a) * t
+end
 love.load = function()
   return state:init()
 end

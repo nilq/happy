@@ -1,5 +1,6 @@
 local path = "game/"
-local game = state:new()
+game = state:new()
+SIZE = 20
 love.graphics.setBackgroundColor(1, 1, 1)
 local World = struct({
   content = "table",
@@ -12,6 +13,15 @@ World:impl({
       local element = _list_0[_index_0]
       if element.update then
         element:update(dt)
+      end
+    end
+  end,
+  keypressed = function(self, key, isrepeat)
+    local _list_0 = self.content
+    for _index_0 = 1, #_list_0 do
+      local element = _list_0[_index_0]
+      if element.keypressed then
+        element:keypressed(key, isrepeat)
       end
     end
   end,
@@ -29,15 +39,29 @@ World:impl({
 game.init = function(self)
   local level
   level = require(path .. "level").level
+  local player
+  player = require(path .. "entities").player
   local world_level = level.Level({
     map = { },
-    width = 40,
-    height = 30,
-    size = 20
+    width = love.graphics.getWidth() / SIZE,
+    height = love.graphics.getHeight() / SIZE,
+    size = SIZE,
+    registry = {
+      NULL = 0,
+      BLOCK = 1,
+      PLAYER = 2
+    }
   })
   world_level:init(40, 15)
   self.world = World({
-    content = { },
+    content = {
+      player.Player({
+        x = 10,
+        y = 10,
+        real_x = 10 * 20,
+        real_y = 10 * 20
+      })
+    },
     level = world_level
   })
 end
@@ -47,7 +71,8 @@ end
 game.draw = function(self)
   return self.world:draw()
 end
-game.keypressed = function(self, key)
+game.keypressed = function(self, key, isrepeat)
+  self.world:keypressed(key, isrepeat)
   local _exp_0 = key
   if "escape" == _exp_0 then
     return love.event.quit()
