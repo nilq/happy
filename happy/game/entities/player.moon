@@ -6,8 +6,11 @@ Player = struct
 
 Player\impl
   update: (dt) =>
-    @real_x = math.lerp @real_x, @x * SIZE, dt * 10
-    @real_y = math.lerp @real_y, @y * SIZE, dt * 10
+    @real_x = math.lerp @real_x, @x * SIZE, dt * 15
+    @real_y = math.lerp @real_y, @y * SIZE, dt * 15
+
+    game.camera.x = math.lerp game.camera.x, (math.floor @real_x * 2 + SIZE / 2), dt * game.camera.zoom
+    game.camera.y = math.lerp game.camera.y, (math.floor @real_y * 2 + SIZE / 2), dt * game.camera.zoom
 
   draw: =>
     with love.graphics
@@ -31,13 +34,14 @@ Player\impl
       when "up"
         dy = -1
 
-    unless dx + dy == 0
-      game.world.level\set @x, @y, game.world.level.registry.NULL
+    if game.world.level\vacant @x + dx, @y + dy
+      @x += dx
+      @y += dy
 
-    @x += dx
-    @y += dy
+      unless dx + dy == 0
+        game.world.level\set @x, @y, game.world.level.registry.NULL
 
-    game.world.level\set @x, @y, game.world.level.registry.PLAYER
+      game.world.level\set @x, @y, game.world.level.registry.PLAYER
 
 {
   :Player

@@ -41,6 +41,8 @@ game.init = function(self)
   level = require(path .. "level").level
   local player
   player = require(path .. "entities").player
+  local Camera
+  Camera = require(path .. "camera").Camera
   local world_level = level.Level({
     map = { },
     width = love.graphics.getWidth() / SIZE,
@@ -64,12 +66,20 @@ game.init = function(self)
     },
     level = world_level
   })
+  self.camera = Camera({
+    x = 0,
+    y = 0,
+    r = 0,
+    zoom = 2
+  })
 end
 game.update = function(self, dt)
   return self.world:update(dt)
 end
 game.draw = function(self)
-  return self.world:draw()
+  self.camera:set()
+  self.world:draw()
+  return self.camera:unset()
 end
 game.keypressed = function(self, key, isrepeat)
   self.world:keypressed(key, isrepeat)

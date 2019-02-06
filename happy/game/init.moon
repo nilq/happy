@@ -27,6 +27,7 @@ World\impl
 game.init = =>
   import level  from require path .. "level"
   import player from require path .. "entities"
+  import Camera from require path .. "camera"
 
   world_level = level.Level
     map:    {}
@@ -49,12 +50,23 @@ game.init = =>
         real_y: 10 * 20
     }
     level: world_level
+  
+  @camera = Camera
+    x: 0
+    y: 0
+    r: 0
+    zoom: 2
+
 
 game.update = (dt) =>
   @world\update dt
 
 game.draw = =>
+  @camera\set!
+
   @world\draw!
+
+  @camera\unset!
 
 game.keypressed = (key, isrepeat) =>
   @world\keypressed key, isrepeat

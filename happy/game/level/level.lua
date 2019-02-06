@@ -25,6 +25,9 @@ Level:impl({
     assert(x < self.width and y < self.height and x >= 0 and y >= 0)
     return self.map[x][y]
   end,
+  vacant = function(self, x, y)
+    return (x < self.width and y < self.height and x >= 0 and y >= 0) and self.map[x][y] ~= 1
+  end,
   draw = function(self)
     do
       local _with_0 = love.graphics

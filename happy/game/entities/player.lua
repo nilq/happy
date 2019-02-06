@@ -6,8 +6,10 @@ local Player = struct({
 })
 Player:impl({
   update = function(self, dt)
-    self.real_x = math.lerp(self.real_x, self.x * SIZE, dt * 10)
-    self.real_y = math.lerp(self.real_y, self.y * SIZE, dt * 10)
+    self.real_x = math.lerp(self.real_x, self.x * SIZE, dt * 15)
+    self.real_y = math.lerp(self.real_y, self.y * SIZE, dt * 15)
+    game.camera.x = math.lerp(game.camera.x, (math.floor(self.real_x * 2 + SIZE / 2)), dt * game.camera.zoom)
+    game.camera.y = math.lerp(game.camera.y, (math.floor(self.real_y * 2 + SIZE / 2)), dt * game.camera.zoom)
   end,
   draw = function(self)
     do
@@ -32,12 +34,14 @@ Player:impl({
     elseif "up" == _exp_0 then
       dy = -1
     end
-    if not (dx + dy == 0) then
-      game.world.level:set(self.x, self.y, game.world.level.registry.NULL)
+    if game.world.level:vacant(self.x + dx, self.y + dy) then
+      self.x = self.x + dx
+      self.y = self.y + dy
+      if not (dx + dy == 0) then
+        game.world.level:set(self.x, self.y, game.world.level.registry.NULL)
+      end
+      return game.world.level:set(self.x, self.y, game.world.level.registry.PLAYER)
     end
-    self.x = self.x + dx
-    self.y = self.y + dy
-    return game.world.level:set(self.x, self.y, game.world.level.registry.PLAYER)
   end
 })
 return {

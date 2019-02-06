@@ -25,7 +25,9 @@ Level\impl
 
   get: (x, y) =>
     assert x < @width and y < @height and x >= 0 and y >= 0
-    @map[x][y] 
+    @map[x][y]
+
+  vacant: (x, y) => (x < @width and y < @height and x >= 0 and y >= 0) and @map[x][y] != 1
 
   draw: =>
     with love.graphics
