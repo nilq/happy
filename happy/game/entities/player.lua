@@ -2,14 +2,34 @@ local Player = struct({
   x = "number",
   y = "number",
   real_x = "number",
-  real_y = "number"
+  real_y = "number",
+  speed = "number",
+  move_padding = "number"
 })
 Player:impl({
   update = function(self, dt)
-    self.real_x = math.lerp(self.real_x, self.x * SIZE, dt * 15)
-    self.real_y = math.lerp(self.real_y, self.y * SIZE, dt * 15)
-    game.camera.x = math.lerp(game.camera.x, (math.floor(self.real_x * 2 + SIZE / 2)), dt * game.camera.zoom)
-    game.camera.y = math.lerp(game.camera.y, (math.floor(self.real_y * 2 + SIZE / 2)), dt * game.camera.zoom)
+    self.real_x = math.lerp(self.real_x, self.x * SIZE, dt * self.speed)
+    self.real_y = math.lerp(self.real_y, self.y * SIZE, dt * self.speed)
+    game.camera.x = math.lerp(game.camera.x, (math.floor(self.real_x * game.camera.zoom + SIZE)), dt * game.camera.zoom)
+    game.camera.y = math.lerp(game.camera.y, (math.floor(self.real_y * game.camera.zoom + SIZE)), dt * game.camera.zoom)
+    do
+      local _with_0 = love.keyboard
+      if (math.abs((self.real_x + self.real_y) - (self.x + self.y) * SIZE)) < self.move_padding then
+        local dx = 0
+        local dy = 0
+        if _with_0.isDown("right") then
+          dx = 1
+        elseif _with_0.isDown("left") then
+          dx = -1
+        elseif _with_0.isDown("down") then
+          dy = 1
+        elseif _with_0.isDown("up") then
+          dy = -1
+        end
+        self:move(dx, dy)
+      end
+      return _with_0
+    end
   end,
   draw = function(self)
     do
@@ -21,19 +41,7 @@ Player:impl({
       return _with_0
     end
   end,
-  keypressed = function(self, key, isrepeat)
-    local dx = 0
-    local dy = 0
-    local _exp_0 = key
-    if "right" == _exp_0 then
-      dx = 1
-    elseif "left" == _exp_0 then
-      dx = -1
-    elseif "down" == _exp_0 then
-      dy = 1
-    elseif "up" == _exp_0 then
-      dy = -1
-    end
+  move = function(self, dx, dy)
     if game.world.level:vacant(self.x + dx, self.y + dy) then
       self.x = self.x + dx
       self.y = self.y + dy

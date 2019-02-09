@@ -32,11 +32,11 @@ Level\impl
   draw: =>
     with love.graphics
       for i = 0, @height
-        .setColor 0.55, 0.55, 0.55
+        .setColor 0.9, 0.9, 0.9
         .line 0, i * @size, .getWidth!, i * @size
 
       for i = 0, @width
-        .setColor 0.55, 0.55, 0.55
+        .setColor 0.9, 0.9, 0.9
         .line i * @size, 0, i * @size, .getHeight!
 
 

@@ -44,10 +44,12 @@ game.init = =>
   @world = World
     content: {
       player.Player
-        x: 10
-        y: 10
-        real_x: 10 * 20
-        real_y: 10 * 20
+        x: 10           -- map x
+        y: 10           -- map y
+        real_x: 10 * 20 -- screen x
+        real_y: 10 * 20 -- screen y
+        speed:  8       -- lerp multiplier for moving between regions
+        move_padding: 3 -- allowed max-distance to center before moving further
     }
     level: world_level
   
@@ -55,7 +57,7 @@ game.init = =>
     x: 0
     y: 0
     r: 0
-    zoom: 2
+    zoom: 3
 
 
 game.update = (dt) =>

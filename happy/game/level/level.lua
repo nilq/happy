@@ -32,11 +32,11 @@ Level:impl({
     do
       local _with_0 = love.graphics
       for i = 0, self.height do
-        _with_0.setColor(0.55, 0.55, 0.55)
+        _with_0.setColor(0.9, 0.9, 0.9)
         _with_0.line(0, i * self.size, _with_0.getWidth(), i * self.size)
       end
       for i = 0, self.width do
-        _with_0.setColor(0.55, 0.55, 0.55)
+        _with_0.setColor(0.9, 0.9, 0.9)
         _with_0.line(i * self.size, 0, i * self.size, _with_0.getHeight())
       end
       for x = 0, self.width - 1 do
