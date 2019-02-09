@@ -63,7 +63,9 @@ game.init = function(self)
         real_x = 10 * 20,
         real_y = 10 * 20,
         speed = 8,
-        move_padding = 4
+        move_padding = 4,
+        key_buffer = { },
+        key_limit = 5
       })
     },
     level = world_level

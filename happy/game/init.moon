@@ -50,6 +50,8 @@ game.init = =>
         real_y: 10 * 20 -- screen y
         speed:  8       -- lerp multiplier for moving between regions
         move_padding: 4 -- allowed max-distance to center before moving further
+        key_buffer: {}  -- buffered keys
+        key_limit:  5   -- max buffered keys
     }
     level: world_level
   
