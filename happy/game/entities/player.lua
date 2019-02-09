@@ -14,16 +14,19 @@ Player:impl({
     game.camera.y = math.lerp(game.camera.y, (math.floor(self.real_y * game.camera.zoom + SIZE)), dt * game.camera.zoom)
     do
       local _with_0 = love.keyboard
-      if (math.abs((self.real_x + self.real_y) - (self.x + self.y) * SIZE)) < self.move_padding then
+      if (self.real_x - self.x * SIZE) ^ 2 + (self.real_y - self.y * SIZE) ^ 2 < self.move_padding ^ 2 then
         local dx = 0
         local dy = 0
         if _with_0.isDown("right") then
           dx = 1
-        elseif _with_0.isDown("left") then
+        end
+        if _with_0.isDown("left") then
           dx = -1
-        elseif _with_0.isDown("down") then
+        end
+        if _with_0.isDown("down") then
           dy = 1
-        elseif _with_0.isDown("up") then
+        end
+        if _with_0.isDown("up") then
           dy = -1
         end
         self:move(dx, dy)

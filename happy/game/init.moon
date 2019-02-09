@@ -49,7 +49,7 @@ game.init = =>
         real_x: 10 * 20 -- screen x
         real_y: 10 * 20 -- screen y
         speed:  8       -- lerp multiplier for moving between regions
-        move_padding: 3 -- allowed max-distance to center before moving further
+        move_padding: 4 -- allowed max-distance to center before moving further
     }
     level: world_level
   
@@ -57,7 +57,7 @@ game.init = =>
     x: 0
     y: 0
     r: 0
-    zoom: 3
+    zoom: 2
 
 
 game.update = (dt) =>

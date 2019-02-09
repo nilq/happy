@@ -16,17 +16,17 @@ Player\impl
     game.camera.y = math.lerp game.camera.y, (math.floor @real_y * game.camera.zoom + SIZE), dt * game.camera.zoom
 
     with love.keyboard
-      if (math.abs (@real_x + @real_y) - (@x + @y) * SIZE) < @move_padding
+      if (@real_x - @x * SIZE)^2 + (@real_y - @y * SIZE)^2 < @move_padding^2
         dx = 0
         dy = 0
 
         if .isDown "right"
             dx = 1
-        elseif .isDown "left"
+        if .isDown "left"
             dx = -1
-        elseif .isDown "down"
+        if .isDown "down"
             dy = 1
-        elseif .isDown "up"
+        if .isDown "up"
             dy = -1
 
         @move dx, dy
@@ -38,22 +38,6 @@ Player\impl
 
       .setColor 0, 0.8, 0.8
       .rectangle "line", @real_x, @real_y, SIZE, SIZE
-
-  -- keypressed: (key, isrepeat) =>
-  --   dx = 0
-  --   dy = 0
-
-  --   switch key
-  --     when "right"
-  --       dx = 1
-  --     when "left"
-  --       dx = -1
-  --     when "down"
-  --       dy = 1
-  --     when "up"
-  --       dy = -1
-
-  --   @move dx, dy
 
   move: (dx, dy) =>
     if game.world.level\vacant @x + dx, @y + dy

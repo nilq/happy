@@ -63,7 +63,7 @@ game.init = function(self)
         real_x = 10 * 20,
         real_y = 10 * 20,
         speed = 8,
-        move_padding = 3
+        move_padding = 4
       })
     },
     level = world_level
@@ -72,7 +72,7 @@ game.init = function(self)
     x = 0,
     y = 0,
     r = 0,
-    zoom = 3
+    zoom = 2
   })
 end
 game.update = function(self, dt)
